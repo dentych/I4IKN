@@ -41,18 +41,15 @@ namespace SocketClient {
                 // Create BinaryWriter to write the read data to a file.
                 var writer = new BinaryWriter(File.Open(file, FileMode.Create));
                 int i, counter = 1;
-                while (true) {
+                do
+                {
                     i = stream.Read(data, 0, data.Length);
-                    writer.Write(data);
+                    writer.Write(data, 0, i);
 
                     Console.WriteLine("#{0} - {1} bytes", counter, i);
 
-                    if (i < 1000) {
-                        break;
-                    }
-
                     counter++;
-                }
+                } while (i > 0);
 
                 // Close everything.
                 stream.Close();

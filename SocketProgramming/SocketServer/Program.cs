@@ -46,17 +46,16 @@ namespace SocketServer {
                     var reader = new BinaryReader(File.Open(data, FileMode.Open));
 
                     int counter = 1;
-                    while (true) {
-                        byte[] array = reader.ReadBytes(1000);
+                    byte[] array;
+                    do
+                    {
+                        array = reader.ReadBytes(1000);
                         stream.Write(array, 0, array.Length);
 
                         Console.WriteLine("#{0} - {1} bytes", counter, array.Length);
 
-                        if (array.Length < 1000)
-                            break;
-
                         counter++;
-                    }
+                    } while (array.Length > 0);
                 }
 
                 // Shutdown and end connection
