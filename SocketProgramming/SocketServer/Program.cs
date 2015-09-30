@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
@@ -47,6 +48,10 @@ namespace SocketServer {
 
                     int counter = 1;
                     byte[] array;
+
+                    array = Encoding.ASCII.GetBytes("0");
+                    stream.Write(array, 0, array.Length);
+
                     do
                     {
                         array = reader.ReadBytes(1000);
@@ -56,9 +61,17 @@ namespace SocketServer {
 
                         counter++;
                     } while (array.Length > 0);
+
+                    reader.Close();
+                }
+                else
+                {
+                    byte[] toSend = Encoding.ASCII.GetBytes("0");
+                    stream.Write(toSend, 0, toSend.Length);
                 }
 
                 // Shutdown and end connection
+                stream.Close();
                 client.Close();
             }
             catch (SocketException e) {

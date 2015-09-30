@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Net.Sockets;
 using System.IO;
 
@@ -36,6 +37,21 @@ namespace SocketClient {
                 // Buffer to store the response bytes.
                 data = new byte[1000];
 
+                // Check if file was found server side
+                stream.Read(data, 0, 1);
+
+                if (Encoding.ASCII.GetString(data).StartsWith("0"))
+                {
+                    Console.WriteLine("Server replied that it couldn't find the file!");
+                    stream.Close();
+                    client.Close();
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Server found the file and is now sending! MSG: {0}", Encoding.ASCII.GetString(data));
+                }
+
                 // Remove path from filename.
                 string file = Path.GetFileName(filename);
                 // Create BinaryWriter to write the read data to a file.
@@ -51,7 +67,7 @@ namespace SocketClient {
                     counter++;
                 } while (i > 0);
 
-                // Close everything.
+                writer.Close();
                 stream.Close();
                 client.Close();
             }
