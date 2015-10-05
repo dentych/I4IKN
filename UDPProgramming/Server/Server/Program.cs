@@ -46,16 +46,28 @@ namespace Server
                         reply = ReadLoadavg();
                     }
 
-                    bytes = Encoding.ASCII.GetBytes(uptime);
+                    bytes = Encoding.ASCII.GetBytes(reply);
                     listener.Send(bytes, bytes.Length, groupEP);
 
-                    Console.WriteLine("Replied: {0}", uptime);
+                    Console.WriteLine("Replied: {0}", reply);
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
+        }
+
+        private static string ReadLoadavg()
+        {
+            if (File.Exists("/proc/loadavg"))
+            {
+                string line = File.ReadLines("/proc/loadavg").First();
+
+                return line;
+            }
+
+            return "";
         }
 
         private static string ReadUptime()
