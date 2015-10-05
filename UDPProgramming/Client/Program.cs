@@ -10,7 +10,7 @@ class Program
         Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram,
             ProtocolType.Udp);
 
-        IPAddress broadcast = IPAddress.Parse("127.0.0.1");
+        IPAddress broadcast = IPAddress.Parse("188.166.29.138");
 
         byte[] sendbuf = Encoding.ASCII.GetBytes("u");
         IPEndPoint ep = new IPEndPoint(broadcast, 12345);
@@ -22,6 +22,6 @@ class Program
         sendbuf = new byte[100];
         s.Receive(sendbuf);
 
-        Console.Write("Received: {0}", Encoding.ASCII.GetString(sendbuf));
+        Console.WriteLine("Received: {0}", Encoding.ASCII.GetString(sendbuf));
     }
 }
