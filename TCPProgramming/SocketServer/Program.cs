@@ -49,7 +49,7 @@ namespace SocketServer {
                     int counter = 1;
                     byte[] array;
 
-                    array = Encoding.ASCII.GetBytes("0");
+                    array = Encoding.ASCII.GetBytes("1");
                     stream.Write(array, 0, array.Length);
 
                     do
